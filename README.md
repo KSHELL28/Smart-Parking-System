@@ -48,3 +48,9 @@ This project is a C-based implementation of a Smart Car Parking System that mana
 
 3. Follow the on-screen menu for operations.
 
+## 🔧 Future Work
+- Adding a GUI for interaction
+- Storing data in an SQLite database instead of text files
+- Integrating sensor simulation for real-time vehicle tracking
+- Generating daily/monthly reports
+- Adding QR code scanning for vehicle entry
