@@ -54,3 +54,7 @@ This project is a C-based implementation of a Smart Car Parking System that mana
 - Integrating sensor simulation for real-time vehicle tracking
 - Generating daily/monthly reports
 - Adding QR code scanning for vehicle entry
+
+## 📄 License
+This project is licensed under the [MIT License](LICENSE).
+
