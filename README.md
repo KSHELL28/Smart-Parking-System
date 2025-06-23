@@ -42,7 +42,7 @@ This project is a C-based implementation of a Smart Car Parking System that mana
    ```bash
    gcc main.c -o parking_system
    
-2. Compile:
+2. Run:
    ```bash
    ./parking_system
 
