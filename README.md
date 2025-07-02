@@ -1,5 +1,3 @@
-# Smart-Parking-System
-Smart Parking System using C Using Linked Lists 
 # Smart Car Parking System 🚗🅿️
 
 This project is a C-based implementation of a Smart Car Parking System that manages 50 parking slots with automated allocation, billing, and membership tracking using linked lists and file handling.
