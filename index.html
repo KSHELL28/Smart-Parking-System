@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Car Parking Lot System | DSPD Assignment</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">
+                    <i class="fa-solid fa-square-parking"></i>
+                </div>
+                <div class="brand-text">
+                    <h2>SmartPark<span>Pro</span></h2>
+                    <p>Linked List Management</p>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-item active" data-tab="dashboard">
+                    <i class="fa-solid fa-grip"></i>
+                    <span>Parking Lot Layout</span>
+                </button>
+                <button class="nav-item" data-tab="vehicles">
+                    <i class="fa-solid fa-car"></i>
+                    <span>Vehicle Database</span>
+                </button>
+                <button class="nav-item" data-tab="entry-exit">
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    <span>Entry / Exit Gate</span>
+                </button>
+                <button class="nav-item" data-tab="analytics">
+                    <i class="fa-solid fa-chart-simple"></i>
+                    <span>Sorting & Analytics</span>
+                </button>
+                <button class="nav-item" data-tab="linked-list">
+                    <i class="fa-solid fa-diagram-project"></i>
+                    <span>Linked List View</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="policy-badge golden">
+                    <i class="fa-solid fa-crown"></i>
+                    <div>
+                        <strong>Golden Tier</strong>
+                        <span>Slots 1 - 10 (≥200 hrs)</span>
+                    </div>
+                </div>
+                <div class="policy-badge premium">
+                    <i class="fa-solid fa-star"></i>
+                    <div>
+                        <strong>Premium Tier</strong>
+                        <span>Slots 11 - 20 (≥100 hrs)</span>
+                    </div>
+                </div>
+                <div class="policy-badge standard">
+                    <i class="fa-solid fa-car-side"></i>
+                    <div>
+                        <strong>Standard Tier</strong>
+                        <span>Slots 21 - 50 (&lt;100 hrs)</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="top-header">
+                <div class="header-title">
+                    <h1 id="page-title">Parking Lot Layout</h1>
+                    <p id="page-subtitle">Real-time status of 50 parking spaces</p>
+                </div>
+
+                <div class="header-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon occupied">
+                            <i class="fa-solid fa-car-tunnel"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-occupied">0</span>
+                            <span class="stat-label">Occupied</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon free">
+                            <i class="fa-solid fa-square-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-free">50</span>
+                            <span class="stat-label">Available</span>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon revenue">
+                            <i class="fa-solid fa-indian-rupee-sign"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-revenue">₹0</span>
+                            <span class="stat-label">Total Revenue</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" id="btn-quick-entry">
+                        <i class="fa-solid fa-plus"></i> Park Vehicle
+                    </button>
+                </div>
+            </header>
+
+            <!-- TAB 1: PARKING LOT LAYOUT -->
+            <section id="tab-dashboard" class="tab-page active">
+                <div class="layout-controls">
+                    <div class="filter-group">
+                        <label>Filter Zone:</label>
+                        <button class="filter-btn active" data-zone="all">All (1-50)</button>
+                        <button class="filter-btn" data-zone="gold">Golden (1-10)</button>
+                        <button class="filter-btn" data-zone="premium">Premium (11-20)</button>
+                        <button class="filter-btn" data-zone="standard">Standard (21-50)</button>
+                    </div>
+                    <div class="filter-group">
+                        <label>Status:</label>
+                        <button class="filter-btn active" data-status="all">All</button>
+                        <button class="filter-btn" data-status="free">Free</button>
+                        <button class="filter-btn" data-status="occupied">Occupied</button>
+                    </div>
+                </div>
+
+                <div class="parking-grid-container">
+                    <div class="zone-header gold-zone">
+                        <i class="fa-solid fa-crown"></i> Golden Zone (Spaces 1 - 10)
+                    </div>
+                    <div class="parking-grid" id="grid-gold"></div>
+
+                    <div class="zone-header premium-zone">
+                        <i class="fa-solid fa-star"></i> Premium Zone (Spaces 11 - 20)
+                    </div>
+                    <div class="parking-grid" id="grid-premium"></div>
+
+                    <div class="zone-header standard-zone">
+                        <i class="fa-solid fa-car-side"></i> Standard Zone (Spaces 21 - 50)
+                    </div>
+                    <div class="parking-grid" id="grid-standard"></div>
+                </div>
+            </section>
+
+            <!-- TAB 2: VEHICLE DATABASE -->
+            <section id="tab-vehicles" class="tab-page">
+                <div class="table-card">
+                    <div class="table-header">
+                        <div class="search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="search-vehicle-input" placeholder="Search by Vehicle No. or Owner Name...">
+                        </div>
+                        <div class="table-actions">
+                            <button class="btn btn-secondary" id="btn-refresh-vehicles">
+                                <i class="fa-solid fa-rotate"></i> Refresh
+                            </button>
+                        </div>
+                    </div>
+                    <div class="table-wrapper">
+                        <table class="data-table" id="table-vehicles">
+                            <thead>
+                                <tr>
+                                    <th>Vehicle No</th>
+                                    <th>Owner Name</th>
+                                    <th>Membership</th>
+                                    <th>Space ID</th>
+                                    <th>Total Parked (Hrs)</th>
+                                    <th>Total Paid</th>
+                                    <th>Parking Count</th>
+                                    <th>Latest Arrival</th>
+                                    <th>Latest Departure</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vehicle-table-body">
+                                <!-- Dynamic rows -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: ENTRY / EXIT GATE -->
+            <section id="tab-entry-exit" class="tab-page">
+                <div class="gate-grid">
+                    <!-- Entry Form Card -->
+                    <div class="card form-card">
+                        <div class="card-header">
+                            <i class="fa-solid fa-right-to-bracket text-emerald"></i>
+                            <h3>Vehicle Entry Registration</h3>
+                        </div>
+                        <form id="entry-form">
+                            <div class="form-group">
+                                <label for="entry-vehicle-num">Vehicle Number *</label>
+                                <input type="text" id="entry-vehicle-num" placeholder="e.g. MH03AB1234" required>
+                                <small>Enter number to auto-fetch existing vehicle details</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="entry-owner-name">Owner Name *</label>
+                                <input type="text" id="entry-owner-name" placeholder="e.g. Rahul Sharma" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="entry-arrival-time">Arrival Date & Time *</label>
+                                <input type="datetime-local" id="entry-arrival-time" required>
+                            </div>
+
+                            <div class="info-box" id="entry-status-preview">
+                                <div class="info-row">
+                                    <span>Registration Status:</span>
+                                    <strong id="preview-reg-status">New Vehicle</strong>
+                                </div>
+                                <div class="info-row">
+                                    <span>Current Membership:</span>
+                                    <strong id="preview-membership">None (Standard)</strong>
+                                </div>
+                                <div class="info-row">
+                                    <span>Allocated Space ID:</span>
+                                    <strong id="preview-space-id" class="text-emerald">Space #21 (Next Free)</strong>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-emerald btn-block">
+                                <i class="fa-solid fa-car"></i> Park Vehicle Now
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Exit Form Card -->
+                    <div class="card form-card">
+                        <div class="card-header">
+                            <i class="fa-solid fa-right-from-bracket text-rose"></i>
+                            <h3>Vehicle Exit & Billing</h3>
+                        </div>
+                        <form id="exit-form">
+                            <div class="form-group">
+                                <label for="exit-vehicle-select">Select Occupied Vehicle *</label>
+                                <select id="exit-vehicle-select" required>
+                                    <option value="">-- Choose Parked Vehicle --</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exit-departure-time">Departure Date & Time *</label>
+                                <input type="datetime-local" id="exit-departure-time" required>
+                            </div>
+
+                            <div class="bill-box" id="bill-preview">
+                                <h4>Billing Summary</h4>
+                                <div class="bill-row">
+                                    <span>Arrival Time:</span>
+                                    <span id="bill-arrival">-</span>
+                                </div>
+                                <div class="bill-row">
+                                    <span>Departure Time:</span>
+                                    <span id="bill-departure">-</span>
+                                </div>
+                                <div class="bill-row">
+                                    <span>Duration Parked:</span>
+                                    <strong id="bill-duration">0 Hours</strong>
+                                </div>
+                                <div class="bill-row">
+                                    <span>Base Charge (First 3 Hrs @ ₹100):</span>
+                                    <span id="bill-base-fee">₹0</span>
+                                </div>
+                                <div class="bill-row">
+                                    <span>Extra Charge (₹50/Hr after 3 Hrs):</span>
+                                    <span id="bill-extra-fee">₹0</span>
+                                </div>
+                                <div class="bill-row">
+                                    <span>Membership Discount (10%):</span>
+                                    <span id="bill-discount" class="text-emerald">-₹0</span>
+                                </div>
+                                <div class="bill-divider"></div>
+                                <div class="bill-row total">
+                                    <span>Total Amount Due:</span>
+                                    <strong id="bill-total-amount">₹0</strong>
+                                </div>
+                                <div class="bill-row tier-upgrade" id="tier-upgrade-notice" style="display: none;">
+                                    <i class="fa-solid fa-circle-arrow-up"></i>
+                                    <span id="tier-upgrade-text">Membership Upgraded!</span>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-rose btn-block">
+                                <i class="fa-solid fa-receipt"></i> Process Exit & Payment
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: SORTING & ANALYTICS -->
+            <section id="tab-analytics" class="tab-page">
+                <div class="analytics-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa-solid fa-list-ol text-blue"></i>
+                            <h3>Sort Vehicles (Linked List Merge Sort)</h3>
+                        </div>
+                        <div class="sort-actions">
+                            <button class="btn btn-primary" id="btn-sort-veh-count">
+                                <i class="fa-solid fa-arrow-down-wide-short"></i> Sort by Parkings Done
+                            </button>
+                            <button class="btn btn-secondary" id="btn-sort-veh-amount">
+                                <i class="fa-solid fa-indian-rupee-sign"></i> Sort by Parking Amount Paid
+                            </button>
+                        </div>
+                        <div class="table-wrapper mt-3">
+                            <table class="data-table" id="table-sorted-vehicles">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Vehicle No</th>
+                                        <th>Owner Name</th>
+                                        <th>Membership</th>
+                                        <th>Total Parkings</th>
+                                        <th>Total Amount Paid</th>
+                                        <th>Total Parking Hrs</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="sorted-vehicles-body">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa-solid fa-chart-pie text-purple"></i>
+                            <h3>Sort Parking Spaces</h3>
+                        </div>
+                        <div class="sort-actions">
+                            <button class="btn btn-primary" id="btn-sort-space-count">
+                                <i class="fa-solid fa-fire"></i> Sort by Occupancy Frequency
+                            </button>
+                            <button class="btn btn-secondary" id="btn-sort-space-revenue">
+                                <i class="fa-solid fa-vault"></i> Sort by Revenue Generated
+                            </button>
+                        </div>
+                        <div class="table-wrapper mt-3">
+                            <table class="data-table" id="table-sorted-spaces">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Space ID</th>
+                                        <th>Zone</th>
+                                        <th>Current Status</th>
+                                        <th>Total Times Occupied</th>
+                                        <th>Revenue Generated</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="sorted-spaces-body">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 5: LINKED LIST VIEW -->
+            <section id="tab-linked-list" class="tab-page">
+                <div class="ll-container">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fa-solid fa-link text-emerald"></i>
+                            <h3>Vehicle Database Linked List (<code>struct vehicleDB*</code>)</h3>
+                            <button class="btn btn-sm btn-secondary ml-auto" id="btn-refresh-ll">
+                                <i class="fa-solid fa-arrows-rotate"></i> Redraw Nodes
+                            </button>
+                        </div>
+                        <div class="ll-visualization" id="ll-vehicles-view">
+                            <!-- Linked list nodes -->
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fa-solid fa-network-wired text-purple"></i>
+                            <h3>Parking Spaces Linked List (<code>struct space*</code>)</h3>
+                        </div>
+                        <div class="ll-visualization" id="ll-spaces-view">
+                            <!-- Linked list spaces -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Space Detail Modal -->
+    <div class="modal-overlay" id="space-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modal-space-title">Space #1 Details</h3>
+                <button class="modal-close" id="modal-close-btn">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-space-body">
+                <!-- Content populated via JS -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="modal-cancel-btn">Close</button>
+                <button class="btn btn-primary" id="modal-action-btn">Park Vehicle Here</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
